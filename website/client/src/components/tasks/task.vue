@@ -1,8 +1,12 @@
 <template>
   <div class="task-wrapper">
     <div
-      class="task"
-      :class="[{'groupTask': task.group.id}, `type_${task.type}`]"
+      class="task transition"
+      :class="[{
+        'groupTask': task.group.id,
+        'task-not-editable': !teamManagerAccess},
+        `type_${task.type}`
+      ]"
       @click="castEnd($event, task)"
     >
       <approval-header
@@ -17,7 +21,7 @@
         <!-- Habits left side control-->
         <div
           v-if="task.type === 'habit'"
-          class="left-control d-flex align-items-center justify-content-center"
+          class="left-control d-flex justify-content-center pt-3"
           :class="[{
             'control-bottom-box': task.group.id,
             'control-top-box': approvalsClass
@@ -55,7 +59,9 @@
           <div
             class="task-control daily-todo-control"
             :class="controlClass.inner"
-            @click="isUser ? score(task.completed ? 'down' : 'up') : null"
+            @click="isUser ? score(task.completed
+              || task.group.approval.requested ? 'down' : 'up'
+            ) : null"
           >
             <div
               v-if="!isUser"
@@ -66,7 +72,10 @@
             <div
               v-else
               class="svg-icon check"
-              :class="{'display-check-icon': task.completed, [controlClass.checkbox]: true}"
+              :class="{
+                'display-check-icon': task.completed || task.group.approval.requested,
+                [controlClass.checkbox]: true,
+              }"
               v-html="icons.check"
             ></div>
           </div>
@@ -74,7 +83,7 @@
         <!-- Task title, description and icons-->
         <div
           class="task-content"
-          :class="contentClass"
+          :class="[{'cursor-auto': !teamManagerAccess}, contentClass]"
         >
           <div
             class="task-clickable-area"
@@ -175,9 +184,9 @@
                 :class="{open: !task.collapseChecklist}"
                 @click="collapseChecklist(task)"
               >
-                <div
-                  class="svg-icon"
-                  v-html="icons.checklist"
+                <div v-once
+                     class="svg-icon"
+                     v-html="icons.checklist"
                 ></div>
                 <span>{{ checklistProgress }}</span>
               </div>
@@ -302,7 +311,7 @@
         <!-- Habits right side control-->
         <div
           v-if="task.type === 'habit'"
-          class="right-control d-flex align-items-center justify-content-center"
+          class="right-control d-flex justify-content-center pt-3"
           :class="[{
             'control-bottom-box': task.group.id,
             'control-top-box': approvalsClass}, controlClass.down.bg]"
@@ -368,7 +377,7 @@
   }
 
   .cursor-auto {
-    cursor: auto;
+    cursor: auto !important;
   }
 
   .task {
@@ -378,7 +387,7 @@
     border-radius: 2px;
     position: relative;
 
-    &:hover {
+    &:hover:not(.task-not-editable) {
       box-shadow: 0 1px 8px 0 rgba($black, 0.12), 0 4px 4px 0 rgba($black, 0.16);
       z-index: 11;
     }
@@ -393,8 +402,7 @@
   }
 
   .task.groupTask {
-
-    &:hover {
+    &:hover:not(.task-not-editable) {
       border: $purple-400 solid 1px;
       border-radius: 3px;
       margin: -1px; // to counter the border width
@@ -969,6 +977,10 @@ export default {
     showOptions () {
       return this.showEdit || this.showDelete || this.isUser;
     },
+    teamManagerAccess () {
+      if (!this.isGroupTask || !this.group) return true;
+      return (this.group.leader._id === this.user._id || this.group.managers[this.user._id]);
+    },
   },
   methods: {
     ...mapActions({
@@ -1070,6 +1082,10 @@ export default {
       const { drop } = tmp;
       const { firstDrops } = tmp;
       const { quest } = tmp;
+
+      if (response.data.data.approvalRequested) {
+        this.text(response.data.data.approvalRequested, null, false);
+      }
 
       if (crit) {
         const critBonus = crit * 100 - 100;
