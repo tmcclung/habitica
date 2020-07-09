@@ -245,7 +245,6 @@ api.verifyDisplayName = {
   },
 };
 
-
 /**
  * @api {post} /api/v4/user/unequip/:type Unequip all items by type
  * @apiName UserUnEquipByType
