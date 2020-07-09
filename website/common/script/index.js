@@ -86,6 +86,7 @@ import unlock from './ops/unlock';
 import updateTask from './ops/updateTask';
 // TODO under api.libs.statHelpers?
 import * as statHelpers from './statHelpers';
+import { unEquipByType } from './ops/unequip';
 
 const api = {};
 api.content = content;
@@ -180,6 +181,7 @@ api.ops = {
   reset,
   markPmsRead,
   pinnedGearUtils,
+  unEquipByType,
 };
 
 api.errorMessages = {
