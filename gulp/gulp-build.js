@@ -11,16 +11,10 @@ gulp.task('build:babel:common', () => gulp.src('website/common/script/**/*.js')
 
 gulp.task('build:babel', gulp.parallel('build:babel:server', 'build:babel:common', done => done()));
 
-gulp.task('build:cache', gulp.parallel(
-  'cache:content',
-  'cache:i18n',
-  done => done(),
-));
-
 gulp.task('build:prod', gulp.series(
   'build:babel',
   'apidoc',
-  'build:cache',
+  'content:cache',
   done => done(),
 ));
 
