@@ -279,12 +279,6 @@ export default {
     selectedItems: {
       type: Array,
     },
-    emptyMessage: {
-      type: String,
-    },
-    searchPlaceholder: {
-      type: String,
-    },
   },
   watch: {
     selected () {
