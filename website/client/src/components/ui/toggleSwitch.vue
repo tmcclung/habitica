@@ -32,7 +32,13 @@
           :for="toggleId"
         >
           <span class="toggle-switch-inner"></span>
-          <span class="toggle-switch-switch"></span>
+          <span
+            class="toggle-switch-switch"
+            tabindex="0"
+            @focus="handleFocus"
+            @blur="handleBlur"
+            @keyup.space="handleSpace"
+          ></span>
         </label>
       </div>
     </div>
@@ -172,14 +178,14 @@ export default {
   },
   data () {
     return {
-      // The toggle requires a unique id to link it to the label
-      toggleId: this.generateId(),
+      focused: false,
       // The container requires a unique id to link it to the pop-over
       hoverId: this.generateId(),
-
       icons: Object.freeze({
         information: svgInformation,
       }),
+      // The toggle requires a unique id to link it to the label
+      toggleId: this.generateId(),
     };
   },
   computed: {
@@ -188,8 +194,19 @@ export default {
     },
   },
   methods: {
+    handleBlur () {
+      this.focused = false;
+    },
     handleChange ({ target: { checked } }) {
       this.$emit('change', checked);
+    },
+    handleFocus () {
+      this.focused = true;
+    },
+    handleSpace () {
+      if (this.focused) {
+        document.getElementById(this.toggleId).click();
+      }
     },
     generateId () {
       return `id-${Math.random().toString(36).substr(2, 16)}`;
