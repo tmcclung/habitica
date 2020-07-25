@@ -179,14 +179,13 @@ export default {
   },
   data () {
     return {
-      focused: false,
-      // The container requires a unique id to link it to the pop-over
       hoverId: this.generateId(),
       icons: Object.freeze({
         information: svgInformation,
       }),
       // The toggle requires a unique id to link it to the label
       toggleId: this.generateId(),
+      focused: false,
     };
   },
   computed: {
