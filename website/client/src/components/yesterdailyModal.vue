@@ -7,6 +7,7 @@
     :no-close-on-backdrop="true"
     :no-close-on-esc="true"
     @hide="$emit('hide')"
+    @hidden="$emit('hidden')"
   >
     <h1 class="header-welcome text-center">
       {{ $t('welcomeBack') }}
@@ -134,8 +135,8 @@ export default {
 
       await this.cronAction();
 
-      this.$root.$emit('bv::hide::modal', 'yesterdaily');
       this.isLoading = false;
+      this.$root.$emit('bv::hide::modal', 'yesterdaily');
     },
   },
 };
