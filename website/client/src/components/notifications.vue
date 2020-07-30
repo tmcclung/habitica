@@ -604,6 +604,7 @@ export default {
       }
 
       // Lvl evaluation
+      // @TODO use LEVELED_UP notification, would remove the need to check for yesterdailies
       if (afterLvl !== beforeLvl) {
         if (afterLvl <= beforeLvl || this.$store.state.isRunningYesterdailies) return;
         this.showLevelUpNotifications(afterLvl);
