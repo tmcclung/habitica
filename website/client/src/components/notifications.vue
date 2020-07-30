@@ -117,7 +117,7 @@ import { mapState } from '@/libs/store';
 import notifications from '@/mixins/notifications';
 import guide from '@/mixins/guide';
 
-import yesterdailyModal from './yesterdailyModal';
+import yesterdailyModal from './tasks/yesterdailyModal';
 import newStuff from './achievements/newStuff';
 import death from './achievements/death';
 import lowHealth from './achievements/lowHealth';
@@ -458,6 +458,10 @@ export default {
 
       const money = after - before;
       let bonus;
+      // NOTE: the streak bonus snackbar
+      // is not shown when bulk scoring (for example in the RYA modal)
+      // is used as it bypass the client side scoring
+      // and doesn't populate the _tmp object
       if (this.user._tmp) {
         bonus = this.user._tmp.streakBonus || 0;
       }
@@ -715,6 +719,10 @@ export default {
         this.$store.dispatch('user:fetch', { forceLoad: true }),
         this.$store.dispatch('tasks:fetchUserTasks', { forceLoad: true }),
       ]);
+    },
+    afterYesterdailies () {
+      this.scheduleNextCron();
+      this.$store.state.isRunningYesterdailies = false;
 
       if (
         this.levelBeforeYesterdailies > 0
@@ -722,10 +730,6 @@ export default {
       ) {
         this.showLevelUpNotifications(this.user.stats.lvl);
       }
-    },
-    afterYesterdailies () {
-      this.scheduleNextCron();
-      this.$store.state.isRunningYesterdailies = false;
       this.handleUserNotifications(this.user.notifications);
     },
     async handleUserNotifications (after) {
