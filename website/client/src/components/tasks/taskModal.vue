@@ -133,7 +133,7 @@
       </div>
     </div>
     <div
-      v-if="(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)
+      v-if="groupAccessRequiredAndOnPersonalPage
         && (task.type === 'daily' || task.type  === 'todo')"
       class="summary-sentence py-3 px-4"
       v-html="summarySentence"
@@ -243,8 +243,7 @@
           </button>
         </div>
         <template
-          v-if="task.type !== 'reward'
-            && !(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)"
+          v-if="task.type !== 'reward' && !groupAccessRequiredAndOnPersonalPage"
         >
           <div class="d-flex mt-3">
             <lockable-label
@@ -264,12 +263,13 @@
           />
         </template>
         <div
-          v-if="task.type === 'todo'
-            && !(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)"
+          v-if="task.type === 'todo' && !groupAccessRequiredAndOnPersonalPage
+            && (!challengeAccessRequired || task.date)"
           class="option mt-3"
         >
           <div class="form-group">
             <lockable-label
+              :locked="challengeAccessRequired"
               :text="$t('dueDate')"
             />
             <datepicker
@@ -279,12 +279,12 @@
           </div>
         </div>
         <div
-          v-if="task.type === 'daily'
-            && !(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)"
+          v-if="task.type === 'daily' && !groupAccessRequiredAndOnPersonalPage"
           class="option mt-3"
         >
           <div class="form-group">
             <lockable-label
+              :locked="challengeAccessRequired"
               :text="$t('startDate')"
             />
             <datepicker
@@ -294,15 +294,16 @@
           </div>
         </div>
         <div
-          v-if="task.type === 'daily'
-            && !(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)"
+          v-if="task.type === 'daily' && !groupAccessRequiredAndOnPersonalPage"
           class="option mt-3"
         >
           <div class="form-group">
             <lockable-label
+              :locked="challengeAccessRequired"
               :text="$t('repeats')"
             />
             <select-translated-array
+              :disabled="challengeAccessRequired"
               :items="['daily', 'weekly', 'monthly', 'yearly']"
               :value="task.frequency"
               @select="task.frequency = $event"
@@ -310,15 +311,18 @@
           </div>
         </div>
         <div
-          v-if="task.type === 'daily'
-            && !(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)"
+          v-if="task.type === 'daily' && !groupAccessRequiredAndOnPersonalPage"
           class="option mt-3"
         >
           <div class="form-group">
             <lockable-label
+              :locked="challengeAccessRequired"
               :text="$t('repeatEvery')"
             />
-            <div class="input-group-outer">
+            <div
+              class="input-group-outer"
+              :class="{disabled: challengeAccessRequired}"
+            >
               <div class="input-group">
                 <input
                   v-model="task.everyX"
@@ -327,6 +331,7 @@
                   min="0"
                   max="9999"
                   required="required"
+                  :disabled="challengeAccessRequired"
                 >
               </div>
               <div class="input-group-spaced input-group-text">
@@ -337,11 +342,12 @@
         </div>
         <div
           v-if="task.type === 'daily' && task.frequency === 'weekly'
-            && !(groupAccessRequiredAndOnPersonalPage || challengeAccessRequired)"
+            && !groupAccessRequiredAndOnPersonalPage"
           class="option mt-3"
         >
           <div class="form-group">
             <lockable-label
+              :locked="challengeAccessRequired"
               :text="$t('repeatOn')"
             />
             <div class="toggle-group">
@@ -350,6 +356,7 @@
                 :key="dayNumber"
                 :tab-index="dayNumber"
                 :checked.sync="task.repeat[day]"
+                :disabled="challengeAccessRequired"
                 :text="weekdaysMin(dayNumber)"
               />
             </div>
