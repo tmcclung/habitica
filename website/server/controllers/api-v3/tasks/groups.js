@@ -216,7 +216,7 @@ api.assignTask = {
 
     const promises = [];
     const taskText = task.text;
-    const userName = user.profile.name;
+    const userName = `@${user.auth.local.username}`;
 
     if (user._id === assignedUserId) {
       const managerIds = Object.keys(group.managers);
