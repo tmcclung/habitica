@@ -274,6 +274,7 @@
             />
             <datepicker
               :date.sync="task.date"
+              :disabled="challengeAccessRequired || groupAccessRequiredAndOnPersonalPage"
               :highlighted="calendarHighlights"
             />
           </div>
@@ -289,6 +290,7 @@
             />
             <datepicker
               :date.sync="task.startDate"
+              :disabled="challengeAccessRequired || groupAccessRequiredAndOnPersonalPage"
               :highlighted="calendarHighlights"
             />
           </div>
