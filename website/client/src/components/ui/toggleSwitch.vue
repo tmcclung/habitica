@@ -12,7 +12,7 @@
       </div>
       <span
         v-if="hoverText"
-        :id="hoverId"
+        :id="containerId"
         class="svg-icon inline icon-16  float-left"
         v-html="icons.information"
       >
@@ -57,6 +57,11 @@
 
 <style lang="scss" scoped>
   @import '~@/assets/scss/colors.scss';
+
+  .toggle-switch-outer {
+    display: flex;
+    align-items: center;
+  }
 
   .toggle-switch {
     position: relative;
@@ -179,13 +184,15 @@ export default {
   },
   data () {
     return {
-      hoverId: this.generateId(),
+      // The toggle requires a unique id to link it to the label
+      toggleId: this.generateId(),
+      // The container requires a unique id to link it to the pop-over
+      containerId: this.generateId(),
+      focused: false,
+
       icons: Object.freeze({
         information: svgInformation,
       }),
-      // The toggle requires a unique id to link it to the label
-      toggleId: this.generateId(),
-      focused: false,
     };
   },
   computed: {

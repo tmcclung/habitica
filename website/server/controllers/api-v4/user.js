@@ -267,7 +267,7 @@ api.verifyDisplayName = {
  * }
  *
  */
-api.equip = {
+api.unequip = {
   method: 'POST',
   middlewares: [authWithHeaders()],
   url: '/user/unequip/:type',
