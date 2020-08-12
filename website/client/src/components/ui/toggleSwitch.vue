@@ -44,7 +44,7 @@
     </div>
     <b-popover
       v-if="hoverText"
-      :target="hoverId"
+      :target="containerId"
       triggers="hover"
       placement="top"
     >
