@@ -274,7 +274,7 @@
             />
             <datepicker
               :date.sync="task.date"
-              :disabled="challengeAccessRequired || groupAccessRequiredAndOnPersonalPage"
+              :disabled="challengeAccessRequired"
               :highlighted="calendarHighlights"
               :clear-button="true"
             />
@@ -291,7 +291,7 @@
             />
             <datepicker
               :date.sync="task.startDate"
-              :disabled="challengeAccessRequired || groupAccessRequiredAndOnPersonalPage"
+              :disabled="challengeAccessRequired"
               :highlighted="calendarHighlights"
             />
           </div>
@@ -1057,7 +1057,6 @@
 <script>
 import axios from 'axios';
 import clone from 'lodash/clone';
-import forEach from 'lodash/forEach';
 import keys from 'lodash/keys';
 import pickBy from 'lodash/pickBy';
 import moment from 'moment';
@@ -1363,7 +1362,7 @@ export default {
           if (activeDays.length === 0) return ' on <strong>no days</strong>';
           if (activeDays.length === 7) return ' on <strong>every day of the week</strong>';
           dayStringArray.push(' on <strong>');
-          forEach(activeDays, (value, index) => {
+          activeDays.forEach((value, index) => {
             if (activeDays.length > 1 && index === activeDays.length - 1) dayStringArray.push(' and');
             dayStringArray.push(` ${this.expandDayString[value]}`);
             if (activeDays.length > 2 && index !== activeDays.length - 1) dayStringArray.push(',');
@@ -1373,7 +1372,7 @@ export default {
         case 'monthly':
           dayStringArray.push(' on <strong>the ');
           if (daysOfMonth.length > 0) {
-            forEach(daysOfMonth, (value, index) => {
+            daysOfMonth.forEach((value, index) => {
               const stringDay = String(value);
               const stringFinalDigit = stringDay.slice(-1);
               let ordinalSuffix = 'th';

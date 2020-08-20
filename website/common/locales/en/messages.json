@@ -8,7 +8,6 @@
   "messageNotAvailable": "This item is not currently available for purchase.",
   "messageCannotFeedPet": "Can't feed this pet.",
   "messageAlreadyMount": "You already have that mount. Try feeding another pet.",
-  "messageDontEnjoyFood": "<%- egg %> eats <%- foodText %> but doesn't seem to enjoy it.",
   "messageBattleGearUnEquipped": "Battle Gear unequipped.",
   "messageCostumeUnEquipped": "Costume unequipped.",
   "messagePetMountBackgroundUnEquipped": "Pet, Mount, Background unequipped.",
