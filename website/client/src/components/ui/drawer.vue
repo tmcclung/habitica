@@ -6,7 +6,9 @@
       @click="toggle()"
     >
       <div  class="title-row">
-        <slot name="drawer-title-row">{{ title }}</slot>
+        <slot name="drawer-title-row">
+          <div class="text-only">{{ title }}</div>
+        </slot>
       </div>
       <div
         class="drawer-toggle-icon svg-icon icon-10"
@@ -70,6 +72,7 @@
   }
 
   .drawer-title {
+    height: 2rem;
     position: relative;
     background-color: $gray-10;
     box-shadow: 0 1px 2px 0 rgba($black, 0.2);
@@ -77,14 +80,20 @@
     border-top-right-radius: 8px;
     border-top-left-radius: 8px;
     text-align: center;
-    line-height: 1.67;
+    line-height: 1.33;
     color: $white;
-    padding: 6px 0;
+
+    font-size: 12px;
+    font-weight: bold;
     display: flex;
 
     &.no-padding {
       padding-bottom: 0;
     }
+  }
+
+  .text-only {
+    padding-top: 0.5rem;
   }
 
   .title-row {
@@ -121,13 +130,14 @@
     &-text {
       font-size: 12px;
       font-weight: bold;
-      line-height: 1.67;
       text-align: center;
-      color: $white;
+      color: $gray-400;
+      text-decoration: none !important;
       border-bottom: 2px solid transparent;
-      padding: 0px 8px 8px 8px;
+      padding: 0.5rem;
 
-      &-active {
+      &-active, &:hover {
+        color: $white !important;
         border-color: $purple-400;
       }
     }

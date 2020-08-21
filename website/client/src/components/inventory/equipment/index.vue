@@ -26,14 +26,14 @@
       <div class="clearfix">
         <div class="mb-4 float-left">
           <button
-            class="page-header btn-flat equipment-type-button"
+            class="page-header btn-flat equipment-type-button textCondensed"
             :class="{'active': !costumeMode}"
             @click="selectDrawerTab('equipment')"
           >
             {{ $t('battleGear') }}
           </button>
           <button
-            class="page-header btn-flat equipment-type-button"
+            class="page-header btn-flat equipment-type-button textCondensed"
             :class="{'active': costumeMode}"
             @click="selectDrawerTab('costume')"
           >
@@ -132,7 +132,7 @@
             :popover-position="'top'"
             :show-popover="flatGear[activeItems[group]]
               && Boolean(flatGear[activeItems[group]].text)"
-            @click="equipItem(flatGear[activeItems[group]])"
+            @click="openEquipDialog(flatGear[activeItems[group]])"
           >
             <template
               slot="popoverContent"
