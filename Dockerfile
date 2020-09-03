@@ -26,4 +26,4 @@ RUN npm install
 
 # Start Habitica
 EXPOSE 80 8080 36612
-CMD ["node", "./website/transpiled-babel/index.js"]
+CMD ["bash"]
