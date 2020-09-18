@@ -12,3 +12,5 @@ Habitica's code is licensed as described at https://github.com/HabitRPG/habitica
 **Found a bug?** Please report it in the [Report a Bug guild](https://habitica.com/groups/guild/a29da26b-37de-4a71-b0c6-48e72a900dac) rather than creating an issue (an admin will advise you if a new issue is necessary; usually it is not).
 
 **Have any questions about Habitica or its community?** See the links in the [habitica.com](https://habitica.com) website's Help menu or drop in to [Guilds > Tavern Chat](https://habitica.com/groups/tavern) to ask questions or chat socially!
+
+Force rebuild
