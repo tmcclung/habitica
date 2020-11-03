@@ -3,7 +3,7 @@ services:
   client:
     build:
       context: .
-      dockerfile: Dockerfile-Dev
+      dockerfile: ./Dockerfile-Dev
     command: ["npm", "run", "client:dev"]
     depends_on:
       - server
@@ -21,7 +21,7 @@ services:
   server:
     build:
       context: .
-      dockerfile: Dockerfile-Dev
+      dockerfile: ./Dockerfile-Dev
     command: ["npm", "start"]
     depends_on:
       - mongo
